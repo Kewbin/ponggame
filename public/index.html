@@ -1,1 +1,277 @@
+<html>
 
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+</head>
+<style>
+    @font-face {
+        font-family: Aston-F1;
+        src: url("Aston-f1.ttf") format("truetype");
+    }
+
+    html {
+        image-rendering: crisp-edges;
+        background: #000;
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        -webkit-user-select: none;
+        /* Safari */
+        -khtml-user-select: none;
+        /* Konqueror HTML */
+        -moz-user-select: none;
+        /* Old versions of Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */
+        user-select: none;
+        /* Non-prefixed version, currently
+            supported by Chrome, Opera and Firefox */
+        touch-action: manipulation;
+    }
+
+    #canv {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        border: 2px solid white;
+        display: none;
+    }
+
+    .scores {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        font-family: Aston-F1;
+        font-weight: bold;
+        left: 50%;
+        opacity: 0.5;
+        color: white;
+        font-size: 10vh;
+        display: none;
+        z-index: 1;
+    }
+
+    #score {
+        top: 75%;
+    }
+
+    #e_score {
+        top: 25%;
+    }
+
+    .names {
+        position: absolute;
+        transform: translate(0%, -50%);
+        font-family: Aston-F1;
+        font-weight: bold;
+        opacity: 0.5;
+        color: white;
+        font-size: 4vh;
+        display: block;
+        z-index: 1;
+    }
+
+    #myname {
+        top: Calc(50% + 30px);
+    }
+
+    #ename {
+        top: Calc(50% - 30px);
+    }
+
+    #p_left {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        left: 0px;
+        bottom: 0px;
+        z-index: 2;
+    }
+
+    #p_right {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        right: 0px;
+        bottom: 0px;
+        z-index: 2;
+    }
+
+    #p2_left {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        left: 0px;
+        top: 0px;
+        z-index: 2;
+    }
+
+    #p2_right {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        right: 0px;
+        top: 0px;
+        z-index: 2;
+    }
+
+    #menu {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        background: #000;
+        z-index: 3;
+    }
+
+    #stop_menu {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        background: rgba(0, 0, 0, .3);
+        z-index: 3;
+        display: none;
+    }
+
+    .btn {
+        position: relative;
+        border: 3px solid white;
+        color: white;
+        font-family: Aston-F1;
+        font-size: 10vh;
+        font-weight: bold;
+        text-align: center;
+        padding: 5px 10px;
+        margin: 20px;
+        transition-duration: 0.5s;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: #fff;
+        color: #000;
+    }
+
+    #stop {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        right: 20px;
+        top: 50%;
+        padding: 10px;
+        background: black;
+        color: white;
+        border: 2px solid white;
+        transition-duration: 0.5s;
+        cursor: pointer;
+        z-index: 3;
+        display: none;
+    }
+
+    #stop:hover {
+        background: white;
+        color: black;
+    }
+
+    #mp_menu {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        background: #000;
+        z-index: 3;
+        display: none;
+    }
+
+    .mp_btn {
+        position: relative;
+        border: 3px solid white;
+        color: white;
+        font-family: Aston-F1;
+        font-size: 4vw;
+        font-weight: bold;
+        text-align: center;
+        padding: 5px 10px;
+        margin: 20px;
+        transition-duration: 0.5s;
+        cursor: pointer;
+    }
+
+    .mp_btn:hover {
+        background: #fff;
+        color: #000;
+    }
+
+    #mp_menu input {
+        position: relative;
+        border: none;
+        border-bottom: 3px solid white;
+        color: white;
+        background: transparent;
+        font-family: Aston-F1;
+        font-size: 4vw;
+        width: 100%;
+        padding: 5px;
+        margin: 5px;
+    }
+
+    #roomid {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        font-family: Aston-F1;
+        font-size: 5vw;
+        text-align: center;
+        background: rgba(0, 0, 0, .8);
+        color: #fff;
+        width: 100%;
+        display: none;
+    }
+
+    #roomid p {
+        margin: 0;
+    }
+
+    @media screen and (orientation:portrait) {
+        .btn {
+            font-size: 10vw;
+            padding: 10px;
+        }
+    }
+</style>
+
+<body>
+    <canvas id="canv"></canvas>
+    <div id='score' class='scores'>0</div>
+    <div id='e_score' class='scores'>0</div>
+    <div id='myname' class='names'></div>
+    <div id='ename' class='names'></div>
+    <div id='roomid'><b>WAITING FOR OPPONENT...</b>
+    </div>
+    <div id='stop'>▌▐</div>
+    <div id='p_left'></div>
+    <div id='p_right'></div>
+    <div id='p2_left'></div>
+    <div id='p2_right'></div>
+    <div id='stop_menu'>
+        <div class='continue btn'>CONTINUE</div>
+        <div class='tomenu btn'>MAIN MENU</div>
+    </div>
+    <div id='menu'>
+        <div class='easy btn'>EASY</div>
+        <div class='normal btn'>NORMAL</div>
+        <div class='hard btn'>HARD</div>
+        <div class='impossible btn'>IMPOSSIBLE</div>
+        <div class='multiplayer btn'>MULTIPLAYER</div>
+    </div>
+    <div id='mp_menu'>
+        <input type='text' id='mp_name' placeholder='Name' maxlength="15"></input>
+        <div class='mp_play_btn mp_btn'>PLAY</div>
+        <div class='mp_back_btn mp_btn'>BACK</div>
+    </div>
+</body>
+<script src="socket.js"></script>
+<script src="jquery.js"></script>
+<script src="main.js"></script>
+
+</html>
